@@ -1,8 +1,9 @@
-package com.example.takenote;
+package com.example.takenote.database;
 
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
+import com.example.takenote.database.Note;
 
 import java.util.List;
 

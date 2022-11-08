@@ -1,4 +1,4 @@
-package com.example.takenote;
+package com.example.takenote.database;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
