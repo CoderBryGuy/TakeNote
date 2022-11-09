@@ -61,4 +61,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             description = itemView.findViewById(R.id.desc_note_item);
         }
     }
+
+
+
 }
