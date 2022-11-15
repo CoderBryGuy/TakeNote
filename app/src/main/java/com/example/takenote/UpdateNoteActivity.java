@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import static com.example.takenote.MainActivity.*;
+import static com.example.takenote.MainActivity.ConstantsContract.*;
 
 public class UpdateNoteActivity extends AppCompatActivity {
 
@@ -48,6 +49,22 @@ public class UpdateNoteActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+
+    private void updateNote() {
+        String titleLast = mNoteTitle.getText().toString();
+        String bodyLast = mNoteBody.getText().toString();
+        Intent intent = new Intent();
+        intent.putExtra(NOTE_TITLE_LAST, titleLast);
+        intent.putExtra(NOTE_BODY_LAST, bodyLast);
+
+        if (mId != -1) {
+            intent.putExtra(NOTE_ID, mId);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
 
     }
 

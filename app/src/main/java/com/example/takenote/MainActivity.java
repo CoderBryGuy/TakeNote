@@ -22,20 +22,32 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static com.example.takenote.MainActivity.ConstantsContract.*;
+
 public class MainActivity extends AppCompatActivity {
+
+    class ConstantsContract {
+        public final static String NOTE_TITLE = "note_title";
+        public final static String NOTE_BODY = "note_body";
+        public final static String NOTE_ID = "note_id";
+
+        public final static String NOTE_TITLE_LAST = "note_title_last";
+        public final static String NOTE_BODY_LAST = "note_body_last";
+        public final static int REQUEST_CODE = 1;
+    }
 
     private NoteViewModel mNoteViewModel;
 
     RecyclerView mRecyclerView;
-    NoteAdapter mAdapter;
+    NoteAdapter mNoteAdapter;
 
     ActivityResultLauncher<Intent> mIntentActivityResultLauncherFor_AddNote;
     ActivityResultLauncher<Intent> mIntentActivityResultLauncherFor_UpdateNote;
 
-    public final static String NOTE_TITLE = "note_title";
-    public final static String NOTE_BODY = "note_body";
-    public final static String NOTE_ID = "note_id";
-    public final static int REQUEST_CODE = 1;
+//    public final static String NOTE_TITLE = "note_title";
+//    public final static String NOTE_BODY = "note_body";
+//    public final static String NOTE_ID = "note_id";
+//    public final static int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new NoteAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        mNoteAdapter = new NoteAdapter();
+        mRecyclerView.setAdapter(mNoteAdapter);
 
 
         mNoteViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
@@ -62,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Note> notes) {
                 //update the recyclerview
-                mAdapter.setNotes(notes);
+                mNoteAdapter.setNotes(notes);
             }
         });
 
@@ -74,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
-                mNoteViewModel.delete(mAdapter.getNotes(viewHolder.getAdapterPosition()));
+                mNoteViewModel.delete(mNoteAdapter.getNotes(viewHolder.getAdapterPosition()));
                 Toast.makeText(MainActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(mRecyclerView);
 
-        mAdapter.SetOnItemClickListener(new NoteAdapter.OnItemClickListener() {
+        mNoteAdapter.SetOnItemClickListener(new NoteAdapter.OnItemClickListener() {
             @Override
             public void onItemCLick(Note note) {
                 Intent intent = new Intent(MainActivity.this, UpdateNoteActivity.class);
@@ -129,9 +141,12 @@ public class MainActivity extends AppCompatActivity {
 
                         if (resultCode == RESULT_OK && data != null) {
                             //            assert data != null;
-                            mNoteViewModel.insert(
-                                    new Note(data.getStringExtra(NOTE_TITLE),
-                                            data.getStringExtra(NOTE_BODY)));
+                            Note note = new Note(
+                                    data.getStringExtra(NOTE_TITLE),
+                                    data.getStringExtra(NOTE_BODY));
+                            note.setId(data.getIntExtra(NOTE_ID, -1));
+                            mNoteViewModel.update(note);
+
 
                         }
                     }

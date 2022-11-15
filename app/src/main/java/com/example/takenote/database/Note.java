@@ -18,6 +18,12 @@ public class Note {
         this.description = description;
     }
 
+//    public Note(int id, String title, String description) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//    }
+
     public int getId() {
         return id;
     }

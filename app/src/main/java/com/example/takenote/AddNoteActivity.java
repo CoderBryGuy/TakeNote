@@ -11,8 +11,9 @@ import android.os.Bundle;
 import com.example.takenote.database.Note;
 import com.example.takenote.viewmodel.NoteViewModel;
 
-import static com.example.takenote.MainActivity.NOTE_BODY;
-import static com.example.takenote.MainActivity.NOTE_TITLE;
+import static com.example.takenote.MainActivity.ConstantsContract.NOTE_BODY;
+import static com.example.takenote.MainActivity.ConstantsContract.NOTE_TITLE;
+
 
 public class AddNoteActivity extends AppCompatActivity {
 
